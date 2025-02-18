@@ -290,7 +290,15 @@ class FiestaDecisionAvanzada:
     def sugerir_decision(self, proxies: Dict) -> Dict:
         """Analiza la situación y sugiere la mejor decisión"""
         restricciones_info = self.verificar_restricciones(proxies)
-        
+         if len(resultado['restricciones']) > 2:
+            return {
+            'decision': 'No_Salir',
+            'restricciones': restricciones_info['restricciones'],
+            'advertencias': restricciones_info['advertencias'],
+            'explicacion': "No es posible salir",
+            'valores_esperados': np.zeros(len(self.decisiones)),
+            'probabilidades': self.p_base
+            }
         # Calculate valores_esperados regardless of restrictions
         prob_ajustadas = self.ajustar_probabilidades(proxies)
         valores_esperados = np.zeros(len(self.decisiones))
